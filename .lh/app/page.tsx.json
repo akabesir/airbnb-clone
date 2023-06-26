@@ -1,0 +1,22 @@
+{
+    "sourceFile": "app/page.tsx",
+    "activeCommit": 0,
+    "commits": [
+        {
+            "activePatchIndex": 1,
+            "patches": [
+                {
+                    "date": 1687794174636,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n"
+                },
+                {
+                    "date": 1687794192684,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,15 +1,56 @@\n-/** @type {import('next').NextConfig} */\n-const nextConfig = {\n-  experimental: {\n-    appDir: true,\n-  },\n-  images: {\n-    domains: [\n-      'res.cloudinary.com', \n-      'avatars.githubusercontent.com',\n-      'lh3.googleusercontent.com'\n-    ]\n+import Container from \"@/app/components/Container\";\n+import ListingCard from \"@/app/components/listings/ListingCard\";\n+import EmptyState from \"@/app/components/EmptyState\";\n+\n\\ No newline at end of file\n+import getListings, { \n+  IListingsParams\n+} from \"@/app/actions/getListings\";\n+import getCurrentUser from \"@/app/actions/getCurrentUser\";\n+import ClientOnly from \"./components/ClientOnly\";\n+\n+interface HomeProps {\n+  searchParams: IListingsParams\n+};\n+\n+const Home = async ({ searchParams }: HomeProps) => {\n+  const listings = await getListings(searchParams);\n+  const currentUser = await getCurrentUser();\n+\n+  if (listings.length === 0) {\n+    return (\n+      <ClientOnly>\n+        <EmptyState showReset />\n+      </ClientOnly>\n+    );\n   }\n+\n+  return (\n+    <ClientOnly>\n+      <Container>\n+        <div \n+          className=\"\n+            pt-24\n+            grid \n+            grid-cols-1 \n+            sm:grid-cols-2 \n+            md:grid-cols-3 \n+            lg:grid-cols-4\n+            xl:grid-cols-5\n+            2xl:grid-cols-6\n+            gap-8\n+          \"\n+        >\n+          {listings.map((listing: any) => (\n+            <ListingCard\n+              currentUser={currentUser}\n+              key={listing.id}\n+              data={listing}\n+            />\n+          ))}\n+        </div>\n+      </Container>\n+    </ClientOnly>\n+  )\n }\n \n-module.exports = nextConfig\n+export default Home;\n\\ No newline at end of file\n"
+                }
+            ],
+            "date": 1687794174636,
+            "name": "Commit-0",
+            "content": "/** @type {import('next').NextConfig} */\nconst nextConfig = {\n  experimental: {\n    appDir: true,\n  },\n  images: {\n    domains: [\n      'res.cloudinary.com', \n      'avatars.githubusercontent.com',\n      'lh3.googleusercontent.com'\n    ]\n  }\n}\n\nmodule.exports = nextConfig"
+        }
+    ]
+}
